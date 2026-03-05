@@ -1,38 +1,27 @@
 # vaultctl
 
-Markdown-native knowledge operating system. CLI, MCP server, REST API, and native macOS app for AI agents and humans.
+Structured access to your markdown vault. TypeScript toolkit with frontmatter parsing, wikilink resolution, tag extraction, schema governance, and AI enrichment. CLI, REST API, MCP server, and native macOS app.
 
 **Site**: [vaultctl.testinginproduction.co](https://vaultctl.testinginproduction.co) | **Docs**: [vaultctl.testinginproduction.co/docs](https://vaultctl.testinginproduction.co/docs)
 
 ## About
 
-vaultctl gives AI agents and humans structured access to a three-tier knowledge system (vault, skills, memory) through a CLI, REST API, MCP server, and native macOS app. Your markdown vault is the filesystem. vaultctl is the operating system.
+vaultctl gives AI agents and humans structured access to a three-tier knowledge system (vault, skills, memory) through a CLI, REST API, MCP server, and native macOS app. Your markdown files are the data layer. vaultctl parses, indexes, validates, and enriches them.
 
-This repository hosts **releases only** (pre-built binaries, Docker images, changelogs). Source code is maintained in a private repository.
+This repository hosts **releases** (pre-built binaries, changelogs). Source code is maintained in a private repository under BSL 1.1.
 
 ## Packages
 
 | Package | Description |
 |---------|-------------|
 | `@vaultctl/core` | TypeScript library: frontmatter, wikilinks, tags, search, health, intelligence, schema governance |
-| `vaultctl` | CLI for vault operations (20 command groups, JSON-first output) |
-| `@vaultctl/server` | REST API server (Express 5, AI chat, SSE events) |
-| `@vaultctl/mcp` | MCP server for AI agent integration (22 tools, 3 resources, 1 prompt) |
-| `Vaultctl.app` | Native macOS app (SwiftUI, graph visualization, calendar, editor, chat) |
-| `VaultctlMobile` | iOS mobile app (SwiftUI, connects to vaultctl server) |
-| `@vaultctl/site` | Marketing site + documentation |
+| `vaultctl` | CLI (20 command groups, JSON-first output) |
+| `@vaultctl/server` | REST API server (Express 5, SSE events, AI chat) |
+| `@vaultctl/mcp` | MCP server (22 tools, 3 resources, 1 prompt) |
+| `Vaultctl.app` | Native macOS app (SwiftUI, graph, calendar, editor, chat) |
+| `@vaultctl/site` | Documentation site |
 
 ## Installation
-
-### From Source
-
-```bash
-git clone https://github.com/testing-in-production/vaultctl.git
-cd vaultctl
-npm install && npm run build
-alias vaultctl="node $PWD/packages/cli/dist/index.js"
-vaultctl config set vault ~/path/to/your/vault
-```
 
 ### Docker (Server)
 
@@ -52,13 +41,13 @@ Download `Vaultctl.app` from the [Releases](https://github.com/testing-in-produc
 ### MCP Server
 
 ```bash
-claude mcp add vaultctl -s user -- npx @vaultctl/mcp
+claude mcp add vaultctl -s user -- node /path/to/vaultctl/packages/mcp/dist/index.js
 ```
 
 ## Documentation
 
 - [Full documentation](https://vaultctl.testinginproduction.co/docs)
-- [Claude Code guide](CLAUDE_GUIDE.md) -- setting up vaultctl as a knowledge backbone for Claude Code (MCP, skills, memory, CLAUDE.md patterns)
+- [Claude Code guide](CLAUDE_GUIDE.md) -- MCP setup, CLAUDE.md patterns, skills, memory
 
 ## License
 
