@@ -57,7 +57,8 @@ claude mcp add vaultctl -s user -- npx @vaultctl/mcp
 
 ## Documentation
 
-Full documentation at [vaultctl.testinginproduction.co/docs](https://vaultctl.testinginproduction.co/docs).
+- [Full documentation](https://vaultctl.testinginproduction.co/docs)
+- [Claude Code guide](CLAUDE_GUIDE.md) -- setting up vaultctl as a knowledge backbone for Claude Code (MCP, skills, memory, CLAUDE.md patterns)
 
 ## License
 
