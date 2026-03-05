@@ -15,9 +15,9 @@ This repository hosts **releases** (pre-built binaries, changelogs). Source code
 | Package | Description |
 |---------|-------------|
 | `@vaultctl/core` | TypeScript library: frontmatter, wikilinks, tags, search, health, intelligence, schema governance |
-| `vaultctl` | CLI (20 command groups, JSON-first output) |
+| `vaultctl` | CLI (23 command groups, JSON-first output) |
 | `@vaultctl/server` | REST API server (Express 5, SSE events, AI chat) |
-| `@vaultctl/mcp` | MCP server (22 tools, 3 resources, 1 prompt) |
+| `@vaultctl/mcp` | MCP server (25 tools, 3 resources, 1 prompt) |
 | `Vaultctl.app` | Native macOS app (SwiftUI, graph, calendar, editor, chat) |
 | `@vaultctl/site` | Documentation site |
 
