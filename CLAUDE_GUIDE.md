@@ -407,7 +407,7 @@ export VAULTCTL_PATH=/path/to/your/vault
 vaultctl health --json
 
 # Auto-fix what's fixable
-vaultctl health fix
+vaultctl health --fix
 
 # Check specific issue
 vaultctl health --check broken-links
