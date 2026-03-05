@@ -137,7 +137,7 @@ Good for: user preferences, active project state, cross-project patterns, tool c
 
 ## MCP Tools Reference
 
-When the MCP server is registered, Claude Code gets access to 22 tools:
+When the MCP server is registered, Claude Code gets access to 25 tools:
 
 ### Knowledge Operations
 
@@ -163,7 +163,7 @@ When the MCP server is registered, Claude Code gets access to 22 tools:
 
 | Tool | Description |
 |------|-------------|
-| `health_check` | Run vault health checks (16 validators) |
+| `health_check` | Run vault health checks (9 validators) |
 | `health_fix` | Auto-fix health issues |
 | `schema` | Show the vault schema |
 | `schema_diff` | Compare declared schema vs code enforcer |
@@ -304,25 +304,21 @@ One-line description. Use when: (1) trigger condition, (2) trigger condition.
 
 ## Vault Schema
 
-vaultctl enforces note types via frontmatter schema. The default schema includes 15 types:
+vaultctl enforces note types via frontmatter schema. The default schema includes 11 types:
 
 | Type | Purpose |
 |------|---------|
 | `project` | Active projects with status tracking |
 | `area` | Ongoing areas of responsibility |
 | `resource` | Reference material |
-| `inbox` | Unprocessed items |
-| `concept` | Ideas and mental models |
-| `tool` | Software tools and configurations |
 | `person` | People and contacts |
+| `concept` | Ideas and mental models |
 | `meeting` | Meeting notes |
 | `daily` | Daily journal entries |
 | `decision` | Recorded decisions with rationale |
-| `pattern` | Reusable patterns |
-| `skill` | Procedural knowledge |
-| `memory` | Fast context for AI sessions |
-| `template` | Note templates |
-| `archive` | Archived/completed items |
+| `tool` | Software tools and configurations |
+| `inbox` | Unprocessed items |
+| `context` | Contextual/background information |
 
 ### Universal Frontmatter Fields
 
@@ -336,9 +332,10 @@ tags:
   - engineering
   - backend
 created: 2025-01-15
-modified: 2025-03-04
+updated: 2025-03-04
+summary: Brief description of the project
 confidence: high
-source: human
+source_ai: human
 ---
 ```
 
