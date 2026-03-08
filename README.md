@@ -34,9 +34,9 @@ docker run -d \
   ghcr.io/testing-in-production/vaultctl:latest
 ```
 
-### Native macOS App
+### Native macOS App (v3.0.1)
 
-Download `Vaultctl.app` from the [Releases](https://github.com/testing-in-production/vaultctl-releases/releases) page. Code-signed and notarized by Apple.
+Download `Vaultctl-v3.0.1-arm64.zip` from the [latest release](https://github.com/testing-in-production/vaultctl-releases/releases/tag/v3.0.1) or the [Releases](https://github.com/testing-in-production/vaultctl-releases/releases) page. Code-signed and notarized by Apple (macOS 14+, Apple Silicon).
 
 ### MCP Server
 
@@ -47,8 +47,8 @@ claude mcp add vaultctl -s user -- node /path/to/vaultctl/packages/mcp/dist/inde
 ## Documentation
 
 - [Full documentation](https://vaultctl.testinginproduction.co/docs)
-- [Claude Code guide](CLAUDE_GUIDE.md) -- MCP setup, CLAUDE.md patterns, skills, memory
+- [Claude Code guide](CLAUDE_GUIDE.md): MCP setup, CLAUDE.md patterns, skills, memory
 
 ## License
 
-[Business Source License 1.1](LICENSE) -- free for personal, educational, and internal use. Commercial use requires a license. Converts to MIT on 2030-03-04.
+[Business Source License 1.1](LICENSE). Free for personal, educational, and internal use. Commercial use requires a license. Converts to MIT on 2030-03-04.
