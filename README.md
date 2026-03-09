@@ -12,14 +12,14 @@ This repository hosts **releases** (pre-built binaries, changelogs). Source code
 
 ## Latest: v2.1.0 (TypeScript packages) - 2026-03-08
 
-Activity telemetry system, security fixes, and production hardening. See [CHANGELOG](https://github.com/testing-in-production/vaultctl-releases/blob/main/CHANGELOG.md) for details.
+Activity telemetry, CLI/MCP parity (26 CLI commands, 27 MCP tools), security fixes, and production hardening. See [CHANGELOG](https://github.com/testing-in-production/vaultctl-releases/blob/main/CHANGELOG.md) for details.
 
 ## Packages
 
 | Package | Description |
 |---------|-------------|
 | `@vaultctl/core` | TypeScript library: frontmatter, wikilinks, tags, search, health, intelligence, schema governance |
-| `vaultctl` | CLI (23 command groups, JSON-first output) |
+| `vaultctl` | CLI (26 command groups, JSON-first output) |
 | `@vaultctl/server` | REST API server (Express 5, SSE events, AI chat) |
 | `@vaultctl/mcp` | MCP server (27 tools, 3 resources, 1 prompt) |
 | `Vaultctl.app` | Native macOS app (SwiftUI, graph, calendar, editor, chat) |

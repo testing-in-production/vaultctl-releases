@@ -9,6 +9,12 @@ All notable changes to this project will be documented in this file.
   - `ActivityEngine` with append, query, and compact operations
   - REST endpoints: `POST /api/v1/activity`, `POST /api/v1/activity/batch`, `GET /api/v1/activity`
   - MCP tools: `session_activity`, `log_activity`
+- **CLI parity**: 3 new commands bringing CLI to 26 commands (from 23)
+  - `suggest-links <path>`: AI-suggested wiki-links, tags, and summary (matches MCP `suggest_links`)
+  - `activity query`: Query recent session activity telemetry (matches MCP `session_activity`)
+  - `activity log`: Log decisions/patterns to the activity stream (matches MCP `log_activity`)
+- **CLI `read` upgrade**: Now builds knowledge graph and returns backlinks + outbound links (matches MCP `knowledge_read`). Added `--no-graph` flag for fast path.
+- **CLI `write` upgrade**: Now passes knowledge index to `writeNote()` for duplicate detection (matches MCP `knowledge_write`)
 - Claude Code integration guide page on site
 - Public releases repo with GitHub links
 - Site: favicon, logo assets, activity telemetry docs section
@@ -22,6 +28,8 @@ All notable changes to this project will be documented in this file.
 - Site: Tailwind v4 CSS bug, factual claims, stale references
 - Input validation on activity REST endpoints and safe JSON in buffer hook
 - Build: added `NODE_OPTIONS` for MCP heap allocation in npm scripts
+- CLI version string corrected from `1.0.0` to `2.1.0`
+- MCP version string corrected from `2.0.0` to `2.1.0`
 
 ### Changed
 - Site: full content review, rebrand, tighten copy
