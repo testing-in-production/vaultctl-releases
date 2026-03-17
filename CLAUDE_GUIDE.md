@@ -137,7 +137,7 @@ Good for: user preferences, active project state, cross-project patterns, tool c
 
 ## MCP Tools Reference
 
-When the MCP server is registered, Claude Code gets access to 25 tools:
+When the MCP server is registered, Claude Code gets access to 18 tools:
 
 ### Knowledge Operations
 
@@ -147,7 +147,6 @@ When the MCP server is registered, Claude Code gets access to 25 tools:
 | `knowledge_read` | Read a specific note by path |
 | `knowledge_write` | Create or update a note with frontmatter |
 | `knowledge_timeline` | Activity timeline for a note or the whole vault |
-| `suggest_links` | Find related notes that could be wikilinked |
 | `find_similar` | Find semantically similar notes |
 | `enrich` | AI-generated enrichment suggestions |
 
@@ -155,9 +154,9 @@ When the MCP server is registered, Claude Code gets access to 25 tools:
 
 | Tool | Description |
 |------|-------------|
-| `session_start` | Begin a tracked work session |
-| `session_end` | End session with summary |
 | `session_decision` | Record a decision made during the session |
+| `session_activity` | Query Claude Code session history |
+| `log_activity` | Log a decision or pattern to the current session |
 
 ### Health and Governance
 
@@ -165,9 +164,6 @@ When the MCP server is registered, Claude Code gets access to 25 tools:
 |------|-------------|
 | `health_check` | Run vault health checks (9 validators) |
 | `health_fix` | Auto-fix health issues |
-| `schema` | Show the vault schema |
-| `schema_diff` | Compare declared schema vs code enforcer |
-| `schema_impact` | Simulate the impact of a schema change |
 
 ### Intelligence
 
@@ -185,9 +181,8 @@ When the MCP server is registered, Claude Code gets access to 25 tools:
 |------|-------------|
 | `stats` | Vault statistics |
 | `tags_list` | All tags with counts |
-| `note_create` | Create a note from a template |
-| `index_rebuild` | Rebuild the search index |
-| `config_get` | Read vaultctl configuration |
+
+Admin operations (schema governance, index rebuild, config) are available via the CLI (`vaultctl schema`, `vaultctl rebuild`, `vaultctl config`) and REST API.
 
 ## CLI Fallback
 
@@ -335,11 +330,100 @@ created: 2025-01-15
 updated: 2025-03-04
 summary: Brief description of the project
 confidence: high
-source_ai: human
+source_ai: manual
 ---
 ```
 
-Customize the schema in `_meta/schema.yaml` and validate with `vaultctl schema diff`.
+The schema in `_meta/schema.yaml` is fixed by design. Verify schema alignment with `vaultctl schema diff`.
+
+## Session Activity Tracking
+
+vaultctl can automatically record Claude Code session activity into your vault as structured daily notes. This is the activity telemetry system used to build a searchable history of what happened in each coding session.
+
+### How it works
+
+1. **PostToolUse hook** (async, non-blocking): Buffers tool events during the session.
+2. **Stop hook**: Flushes the buffer — sends all events as a batch plus a session digest to the vaultctl server.
+3. **Server**: Creates or appends to today's daily note at `05_Journal/daily/YYYY-MM-DD.md`.
+
+Session entries are grouped under project headers within a `## Sessions` block:
+
+```markdown
+## Sessions
+
+### vaultctl
+
+#### 14:00-15:30 — coding (90 min)
+- 47 tool calls: Edit 12, Read 10, Bash 8, Grep 7, Write 5
+- Files: engine.ts, engine.test.ts, store.ts
+- Milestones: fix ingestBatch project resolution, add atomic write
+- Skills: full-update, claudeception
+
+### personal-site
+
+#### 16:00-16:45 — review (45 min)
+- 23 tool calls: Read 8, Grep 6, Edit 5, Bash 4
+```
+
+### Setting up the hooks
+
+The activity hooks live in `~/.claude/hooks/`. They require the vaultctl server running locally.
+
+**`activity-buffer.sh`** (PostToolUse, async):
+```bash
+# Buffers activity events. Set async: true in settings.json for non-blocking.
+```
+
+**`activity-flush.sh`** (Stop):
+```bash
+# Sends batch + digest to POST /api/v1/activity/batch and POST /api/v1/activity/digest
+```
+
+Add to `~/.claude/settings.json`:
+```json
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "*",
+        "hooks": [{ "type": "command", "command": "~/.claude/hooks/activity-buffer.sh", "async": true }]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [{ "type": "command", "command": "~/.claude/hooks/activity-flush.sh" }]
+      }
+    ]
+  }
+}
+```
+
+### Project mapping
+
+Sessions are mapped to vault project notes via the `paths` frontmatter field on `type: project` notes:
+
+```yaml
+---
+type: project
+status: active
+paths:
+  - ~/Projects/vaultctl
+  - ~/Projects/vaultctl-releases
+---
+```
+
+vaultctl resolves the project by checking which pattern matches the session's working directory. Supports exact paths and glob patterns.
+
+### REST API endpoints
+
+```
+POST /api/v1/activity/digest     # Create/append session digest to daily note
+POST /api/v1/activity/batch      # Ingest batch of raw events
+POST /api/v1/activity            # Ingest single event
+GET  /api/v1/activity/sessions   # List recent sessions
+GET  /api/v1/activity/events     # Query raw events
+POST /api/v1/activity/compact    # Delete events older than N days
+```
 
 ## REST API
 

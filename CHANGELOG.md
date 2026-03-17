@@ -2,6 +2,34 @@
 
 All notable changes to this project will be documented in this file.
 
+## [2.3.0] - 2026-03-17
+
+### Added
+- **Session grouping by project**: Daily notes now group session entries under `### {project}` headers within the `## Sessions` block
+- **Session digest API**: `POST /api/v1/activity/digest` creates or appends structured session entries to today's daily note
+- **Heading injection guard**: Session entries containing `#`, `##`, or `###` lines (e.g. from commit message milestones) are escaped before insertion, preventing section structure corruption on re-processing
+
+### Fixed
+- **ingestBatch per-event project resolution**: Was resolving project once from first event's `cwd` and applying it to all events in the batch. Each event now independently resolves its own project.
+- **Atomic daily note writes**: Update path now uses tmp-file + POSIX rename to prevent partial writes on crash
+- **Compaction script exit codes**: `vaultctl-compact.sh` was silently swallowing curl errors. Now exits non-zero on curl failure or non-2xx HTTP response.
+- **PostToolUse hook**: `activity-buffer.sh` now runs with `async: true`, removing ~41ms of blocking latency per tool call
+
+### Changed
+- **Claude Code guide** (`docs/claude-guide.md`): Added full session activity tracking documentation (hooks setup, project mapping, REST API endpoints, daily note format)
+
+### Tests
+- 552 tests across 36 files (up from 539/35)
+
+## [2.2.0] - 2026-03-12
+
+### Added
+- **MCP hardening**: Global error handlers, graceful shutdown, promise-locked index builds, per-file resilience, stderr-only logging
+- **Keychain auth**: Server auth password stored in macOS Keychain (`security find-generic-password -a admin -s vaultctl-server -w`)
+- **Native macOS app**: SwiftUI app v4.0.0 with graph, calendar, editor, chat, and intelligence features
+- **Marketing site**: `vaultctl.testinginproduction.co` with docs and getting started guide
+- **BSL 1.1 license**: Business Source License, converts to MIT 2030-03-04
+
 ## [2.1.0] - 2026-03-08
 
 ### Added
