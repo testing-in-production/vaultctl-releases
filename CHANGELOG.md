@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file.
 
+## [2.3.1] - 2026-03-17
+
+### Fixed
+- **JSON injection** (`activity-flush.sh`): Stop hook system message built via heredoc interpolation. Special characters in commit messages/server responses could break JSON. Now uses `python3 json.dumps()`.
+- **CORS regex**: `http://localhost:*` wildcard was matching `http://localhost.evil.com`. Constrained to port-only wildcard (`[0-9]+`).
+- **Webhook SSRF**: `POST /api/v1/webhooks` accepted arbitrary URLs. Now requires `https://` and blocks internal/loopback/link-local hosts.
+- **File permissions**: Activity JSONL files created world-readable (644). Both hooks now use `umask 077` to create files as 600.
+- **Info disclosure**: Removed stale hardcoded version from `GET /` response.
+- **Internal docs**: `docs/plans/` removed from git (contained personal project names).
+
+### Tests
+552 tests across 36 files.
+
 ## [2.3.0] - 2026-03-17
 
 ### Added
